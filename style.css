@@ -1,0 +1,19 @@
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    aspect-ratio: 1 / 1; /* Optional: keeps the grid square */
+    gap: 1vmin; /* Optional: space between boxes */
+    width: 54vmin; /* or 100%, depending on your layout */
+    max-width: 90vw;
+  }
+  
+  .box {
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+    font-size: 8vmin;
+    color: red;
+    background-color: yellow;
+  }
