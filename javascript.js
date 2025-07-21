@@ -107,10 +107,15 @@ const gameController = (function () {
 
     const isGameOver = () => gameOver;
 
+    const reset = () => {currentPlayer = player1;
+        gameOver = false;
+    };
+
     return {
         playTurn,
         getCurrentPlayer,
-        isGameOver 
+        isGameOver, 
+        reset
     };
    
 })(); 
@@ -123,11 +128,24 @@ const displayController = (function () {
         box.addEventListener('click', function() {
             const row = Math.floor(index / 3);
             const col = index % 3;
-            board = gameBoard.getBoard();
+            const board = gameBoard.getBoard();
 
-            gameController.playTurn(row,col);
+            if(gameController.isGameOver()){return}
+            
+            const turnPlayed = gameController.playTurn(row,col);
 
-            box.textContent = board[row][col];
+            if(turnPlayed === true){
+                box.textContent = board[row][col];
+            }            
         });
       });
+
+      const restartBtn = document.querySelector('.restart');
+      restartBtn.addEventListener('click', () => {
+        gameBoard.reset();
+        boxes.forEach(box => {
+            box.textContent ='';
+        });
+        gameController.reset();
+      })
 })(); 
