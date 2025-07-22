@@ -39,6 +39,12 @@ const Player = (name, marker) => {
 const gameController = (function () {
     const player1 = Player('Player 1', 'X');
     const player2 = Player('Player 2', 'O');
+
+    const setPlayerName = (name1, name2) => {
+        player1.name = name1;
+        player2.name = name2;
+    };
+    
     let currentPlayer = player1;
     let gameOver = false;
     
@@ -115,7 +121,8 @@ const gameController = (function () {
         playTurn,
         getCurrentPlayer,
         isGameOver, 
-        reset
+        reset,
+        setPlayerName
     };
    
 })(); 
@@ -124,6 +131,7 @@ const gameController = (function () {
  
 const displayController = (function () {
     const boxes = document.querySelectorAll('.box');
+    const status = document.querySelector('.status');
     boxes.forEach(function(box, index) {
         box.addEventListener('click', function() {
             const row = Math.floor(index / 3);
@@ -136,6 +144,12 @@ const displayController = (function () {
 
             if(turnPlayed === true){
                 box.textContent = board[row][col];
+                
+                if (gameController.isGameOver() == true){
+                    status.textContent = `${gameController.getCurrentPlayer().name} wins!`;
+                } else {
+                    status.textContent = `Turn: ${gameController.getCurrentPlayer().name}`;
+                }
             }            
         });
       });
@@ -147,5 +161,21 @@ const displayController = (function () {
             box.textContent ='';
         });
         gameController.reset();
+      })
+
+      const nameBtn = document.querySelector('.playerNameBtn');
+      const dialog = document.querySelector('dialog');
+      nameBtn.addEventListener('click', () =>{
+        dialog.showModal();
+      })
+
+      const form = document.querySelector('form');
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const name1 = document.getElementById('player1').value;
+        const name2 = document.getElementById('player2').value;
+        gameController.setPlayerName(name1,name2);
+
+        dialog.close();
       })
 })(); 
