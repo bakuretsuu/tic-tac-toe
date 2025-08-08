@@ -32,13 +32,18 @@ const gameBoard = (function () {
     };
 })();
 
-const Player = (name, marker) => {
-    return {name, marker};
-};
+
+class Player{
+    constructor(name, marker){
+        this.name = name;
+        this.marker = marker;
+    }
+    
+}
 
 const gameController = (function () {
-    const player1 = Player('Player 1', 'X');
-    const player2 = Player('Player 2', 'O');
+    const player1 = new Player('Player 1', 'X');
+    const player2 = new Player('Player 2', 'O');
 
     const setPlayerName = (name1, name2) => {
         player1.name = name1;
